@@ -1,0 +1,508 @@
+<!--[main]-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="apibrasil" />
+    <meta name="generator" content="APIBrasil" />
+    <title>Connect Zap</title>
+
+    <!-- <link href="https://getbootstrap.com/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" /> -->
+    <link href="https://getbootstrap.com/docs/5.2/examples/cover/cover.css" rel="stylesheet" />
+
+    <style>
+        .card-title {
+            margin-bottom: var(--bs-card-title-spacer-y);
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body class="d-flex h-100 text-center text-black">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="mb-auto">
+            <!-- <div>
+                <img src="https://apigratis.com.br/img/logo.png" alt="">
+                <h1>WhatsApp QRCode</h1>
+            </div> -->
+        </header>
+
+        <main class="px-3 m-3">
+
+            <form class="row" onsubmit="return false;">
+
+                <div class="card pt-3">
+
+                    <div class="card-title">
+                        <img src="https://me-qr-scanner.com/assets/img/Mask-Group.png" class="w-20" alt="" id="image" />
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="alert alert-primary d-none" role="alert"> </div>
+                        <div class="alert alert-success d-none" role="alert"> </div>
+                        <div class="alert alert-danger d-none" role="alert"> </div>
+
+                        <div class="row">
+
+                            <div class="col-6 mb-3">
+                                <!-- <input type="text" class="form-control" id="session" placeholder="Samsung #1" value="" required> -->
+                            </div>
+
+                            <div class="col-6 mb-3">
+                                <!-- <input type="text" class="form-control" id="secretkey" placeholder="SecretKey" required> -->
+                            </div>
+
+                            <!-- <div class="mb-3">
+                                <label for="qrcode" style="float: left">Token para demais requisições</label>
+                                <input type="text" class="form-control" id="yourToken"
+                                    placeholder="Aguardando iniciar a sessão..." disabled>
+                            </div> -->
+
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <button type="submit" class="btn btn-lg w-100 btn-success"
+                            onclick="alterSession('session7799')"> Conectar
+                            uma sessão </button>
+                    </div>
+                </div>
+
+
+                <input type="hidden" id="sessionkey" value="chave77904">
+                <input type="hidden" id="wh_status" value="">
+                <input type="hidden" id="wh_message" value="">
+                <input type="hidden" id="wh_qrcode" value="">
+                <input type="hidden" id="wh_connect" value="">
+
+            </form>
+
+        </main>
+
+        <footer class="mt-auto text-white-50">
+            <!-- <p><a href="https://apigratis.com.br/documentacoes" target="_blank">https://apigratis.com.br/docs</a></p> -->
+        </footer>
+    </div>
+</body>
+
+<script src="https:////cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- <script src="https://cdn.socket.io/4.4.0/socket.io.min.js"></script> -->
+
+<script src="/lib/myzap/js/socket.io.js"></script>
+
+<script type="text/javascript">
+
+    const server = 'http://69.164.199.123:3401'
+    const server_socket = 'http://69.164.199.123:3401'
+
+    // const socket = io(server + '/', { transports: ['websocket'] });
+    const socket = io(server + '/', { transports: ['websocket'] });
+
+    $(document).ready(async function () {
+
+        console.log('O documento está ready...')
+
+        // await checkSessionStatus('session77999')
+
+        console.log('A sessão fopi checada')
+
+
+
+    })
+
+
+
+
+
+
+    async function checkSessionStatus(session) {
+
+
+        const SessionStatus = false;
+
+        var settings = {
+            "url": "https://69.164.199.123:3401/start",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json",
+                "apitoken": "12345",
+                "sessionkey": "session77999"
+            },
+            "data": JSON.stringify({
+                "session": "session77999",
+                "wh_status": "",
+                "wh_message": "",
+                "wh_qrcode": "",
+                "wh_connect": ""
+            }),
+        };
+
+
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            if (response.status === 'inChat') {
+                console.log('Sessão ativa')
+
+                return;
+            }
+
+
+            console.log('Sessão inativa')
+
+
+        });
+
+    }
+
+
+
+
+
+
+
+    $(window).on('load', function () {
+
+        // VerifySessionConn('session7799')
+        console.log('O documento está load...')
+
+    })
+
+    // const socket = io(`${server_socket}`, {
+    //     transportOptions: {
+    //         polling: {
+    //             extraHeaders: {
+    //                 'Authorization': 'Bearer abc',
+    //             },
+    //         },
+    //     },
+    // });
+
+    async function generateToken() {
+
+        session = document.getElementById('session').value
+        let secretkey = document.getElementById('secretkey').value //`LIzBSyCmNVzwt2ErKgtnZgG`
+
+
+        const config = {
+            headers: {
+                apitoken: '12345',
+                sessionkey: 'chave7799'
+            }
+        }
+
+        const data = {
+            session: 'session7799',
+            wh_status: '',
+            wh_message: '',
+            wh_qrcode: '',
+            wh_connect: '',
+        }
+
+
+        axios.post(`${server_socket}/start`, data, config)
+            .then(async function (response) {
+
+                console.log('Response: ', response);
+
+                document.getElementById('session').value
+                document.getElementById('yourToken').value = response?.data?.token
+                document.getElementById('image').src = 'https://www.drivethrurpg.com/shared_images/ajax-loader.gif'
+                // document.getElementById('image').style.width = '50%'
+
+                await startSession(session, response.data.token);
+
+            }).catch(function (error) {
+
+                console.log(error)
+                document.getElementsByClassName('alert-danger')[0].classList.remove('d-none')
+                document.getElementsByClassName('alert-danger')[0].innerHTML = `<strong>Aviso!</strong> ${error?.response?.data?.message ?? 'Erro não identificado'}`
+
+
+
+                // axios({
+                //     method: 'POST',
+                //     url: `${server}/start`,
+                //     // url: `${server}/${session}/${secretkey}/generate-token`,
+                //     data: {},
+                //     headers: config.headers,
+                //     // responseType: 'stream',
+                // }).then(async function (response) {
+
+                //     document.getElementById('session').value
+                //     document.getElementById('yourToken').value = response?.data?.token
+                //     document.getElementById('image').src = 'https://www.drivethrurpg.com/shared_images/ajax-loader.gif'
+                //     document.getElementById('image').style.width = '50%'
+
+                //     await startSession(session, response.data.token);
+
+                // }).catch(function (error) {
+
+                //     console.lo(error)
+                //     document.getElementsByClassName('alert-danger')[0].classList.remove('d-none')
+                //     document.getElementsByClassName('alert-danger')[0].innerHTML = `<strong>Aviso!</strong> ${error?.response?.data?.message ?? 'Erro não identificado'}`
+            });
+
+    }
+
+    async function startSession(session, bearerToken) {
+
+        document.getElementsByClassName('alert-danger')[0].classList.add('d-none')
+        document.getElementsByClassName('alert-success')[0].classList.add('d-none')
+
+
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                apitoken: '12345',
+                sessionkey: 'session7799'
+            }
+        }
+
+        const data = {
+            session: 'session7799',
+            "webhook": "https://webhook.site/c5b08f90-fd50-4bc9-823c-a933269a6067"
+        }
+
+
+        axios.post(`${server_socket}/start`, data, config)
+            .then(async function (response) {
+
+                switch (response?.data?.status) {
+                    case 'CONNECTED':
+                        document.getElementById('image').src = `https://static.wixstatic.com/media/46f3fb_0a0f693ad5af49e8adc522d5080165fc~mv2.gif`
+                        document.getElementById('image').style.width = '40%'
+                        break;
+
+                    default:
+                        document.getElementById('image').src = 'https://www.drivethrurpg.com/shared_images/ajax-loader.gif'
+                        document.getElementById('image').style.width = '50%'
+                        break;
+                }
+
+            }).catch(function (error) {
+                document.getElementsByClassName('alert-danger')[0].classList.remove('d-none')
+                document.getElementsByClassName('alert-danger')[0].innerHTML = `<strong>Erro!</strong> ${error.response.data.message}`
+            })
+
+
+        // axios({
+        //     method: 'POST',
+        //     url: `${server}/${session}/start-session`,
+        //     responseType: 'stream',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': `Bearer ${bearerToken}`
+        //     },
+        //     data:{
+        //         "webhook": "https://webhook.site/c5b08f90-fd50-4bc9-823c-a933269a6067"
+        //     }
+        // }).then(async function (response) {
+
+        //     switch(response?.data?.status){
+        //         case 'CONNECTED':
+        //             document.getElementById('image').src = `https://static.wixstatic.com/media/46f3fb_0a0f693ad5af49e8adc522d5080165fc~mv2.gif`
+        //             document.getElementById('image').style.width = '40%'
+        //         break;
+
+        //         default:
+        //             document.getElementById('image').src = 'https://www.drivethrurpg.com/shared_images/ajax-loader.gif'
+        //             document.getElementById('image').style.width = '50%'
+        //         break;
+        //     }
+
+        // }).catch(function (error) {
+        //     document.getElementsByClassName('alert-danger')[0].classList.remove('d-none')
+        //     document.getElementsByClassName('alert-danger')[0].innerHTML = `<strong>Erro!</strong> ${error.response.data.message}`
+        // })
+
+
+
+    }
+
+
+
+    async function VerifySessionConn(session) {
+
+
+        console.log('Verificando a sessão...{$session}')
+
+
+
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'responseType': 'stream',
+                'apitoken': '12345',
+                'sessionkey': 'session77999'
+            }
+        }
+
+        const data = {
+            session: 'session77999',
+            wh_status: 'XSRF-TOKEN',
+            wh_message: '',
+            wh_qrcode: '',
+            wh_connect: '',
+        }
+
+        axios.post(`${server}/start`, data, config)
+            .then((value) => {
+                console.log(value)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+
+
+
+    }
+
+    async function alterSession(session) {
+        if (!session) {
+            alert("Digite o nome da sessão antes de continuar...")
+        } else {
+
+            let sessionkey = 'sesion7799'
+
+            if (!sessionkey) {
+                alert("Digite a SESSION KEY da sessão antes de continuar...")
+            }
+            else {
+
+                document.getElementById('image').style.visibility = "visible";
+
+                document.getElementById('image').src = 'https://www.drivethrurpg.com/shared_images/ajax-loader.gif'
+                document.getElementById('image').style.width = '50%'
+                // document.getElementById('send-btn').disabled = true
+                await getSession(session)
+
+
+            }
+
+
+        }
+    }
+
+
+
+    async function getSession(session) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'responseType': 'stream',
+                'apitoken': '12345',
+                'sessionkey': 'session77999'
+            }
+        }
+
+        const data = {
+            session: 'session77999',
+            wh_status: 'XSRF-TOKEN',
+            wh_message: '',
+            wh_qrcode: '',
+            wh_connect: '',
+        }
+
+        axios.post(`${server}/start`, data, config)
+            .then((value) => {
+                console.log(value)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+
+    }
+
+
+
+
+
+
+    socket.on('msg', (msg) => {
+        console.log('On msg...')
+        if (msg) {
+            document.getElementById('image').style.visibility = "hidden";
+            document.getElementById('send-btn').disabled = false
+            alert(msg.reason)
+        }
+
+    })
+
+    socket.on('qrCode', (qrCode) => {
+        console.log('On Qrcode...')
+        let session = 'session77999'
+        if (session === qrCode.session) {
+
+            document.getElementById('image').src = qrCode.data
+        }
+    })
+
+    socket.on('whatsapp-status', (status) => {
+        console.log('Lendo o status...')
+        if (status) {
+            alert('Whatsapp Aberto com sucesso')
+            // document.getElementById('send-btn').disabled = false
+            document.getElementById('image').src = "https://megaimagem.com.br/img/ok.png"
+        }
+        else {
+            alert('Whatsapp erro ao conectar....')
+            // document.getElementById('send-btn').disabled = false
+            document.getElementById('image').src = "/error.jpg"
+        }
+    })
+
+
+
+
+    // socket.on('onpresencechanged', () => {
+    //     console.log('onpresencechanged')
+    // })
+
+    // socket.on('qrCode', (qrCode) => {
+    //     document.getElementById('image').src = qrCode.data;
+    //     document.getElementById('image').style.width = '40%'
+    // });
+
+    // socket.on('session-logged', (session) => {
+    //     if (session?.status == true) {
+    //         Swal.fire({
+    //             icon: 'success',
+    //             title: 'Conectado!',
+    //             text: 'Sua sessão foi conectada com sucesso!',
+    //             confirmButtonText: 'Muito bom!',
+    //             footer: '<a href="https://apigratis.com.br/documentacoes" target="_blank">https://apigratis.com.br/docs</a>'
+    //         })
+    //         document.getElementById('image').src = `https://static.wixstatic.com/media/46f3fb_0a0f693ad5af49e8adc522d5080165fc~mv2.gif`
+    //         document.getElementById('image').style.width = '40%'
+    //     }
+    // })
+
+    // socket.on('received-message', (message) => {
+    //     if (session == message?.response?.session) {
+    //         Swal.fire({
+    //             icon: 'success',
+    //             title: 'Mensagem recebida',
+    //             text: `${message?.response?.body ?? 'no text'}`,
+    //             showConfirmButton: false,
+    //             footer: '<a href="https://apigratis.com.br/documentacoes" target="_blank">https://apigratis.com.br/docs</a>'
+    //         })
+    //     }
+    // });
+
+</script>
+
+</html>
+
+
+<!--[/main]-->

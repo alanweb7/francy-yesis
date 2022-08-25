@@ -1,0 +1,13 @@
+[
+	{
+		"name": "FRANCY | SISTEMA",
+		"host": "yesis.app.br",
+		"port": 21,
+		"type": "ftp",
+		"username": "alan7@francy.yesis.app.br",
+		"password": "@SEGURO#live332",
+		"path": "/",
+		"autosave": true,
+		"confirm": true
+	}
+]

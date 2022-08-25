@@ -1,0 +1,393 @@
+<!--[main]-->
+<script type="text/javascript">
+
+    // const server = 'http://69.164.199.123:3401'
+    // const server_socket = 'http://69.164.199.123:3401'
+
+    // const socket = io(server + '/', { transports: ['websocket'] });
+
+    $(document).ready(async function () {
+
+        console.log('O documento está ready...')
+
+        // await checkSessionStatus('session77999')
+
+        console.log('A sessão foi checada')
+
+
+        $("button#tbutton_btn_enviar").click(function (e) {
+            e.preventDefault();
+
+            console.log('sistema de envios...')
+
+            sendWhatsappMessage("")
+
+        });
+
+    })
+
+
+
+    function MessageSend(params) {
+
+
+        console.log('sim');
+
+
+
+
+
+
+    }
+
+
+    function sleep(time, callback) {
+        var stop = new Date().getTime();
+        while (new Date().getTime() < stop + time) {
+            ;
+        }
+        callback();
+    }
+
+
+    async function sendWhatsappMessage(data) {
+
+
+
+        let sessionKey = $("input#session_key").val();
+        let sessionName = $("input#session_name").val();
+        let textSend = $("textarea#text_to_send").val();
+        let linkSend = encodeURI($("input#link_to_send").val());
+
+
+        if (!textSend) {
+
+
+            return false;
+
+        }
+
+        let listToSend = '{$listToSend}'.replace(/&quot;/g, '"');
+
+        listToSend = JSON.parse(listToSend);
+
+        console.log(`enviando para ${listToSend.length} contatos`)
+
+        var divisor = `${listToSend.length}`;
+
+        let EvoluteValue = Math.floor(100 / divisor); //x.toString().length;let 
+
+        let progressVal = 0;
+
+        console.log(`A fração da progressão é ${EvoluteValue}`)
+
+
+        $.each(listToSend, function (indexInArray, contact) {
+
+
+
+            progressVal = EvoluteValue + progressVal;
+
+            console.log(progressVal);
+
+            $("#send-progress-bar")
+                .text(`${'progressVal'}%`)
+                .css({
+                    width: `${progressVal}%`
+                });
+
+            if (progressVal > 94) {
+
+
+                console.log('finalizou')
+
+                $("#send-progress-bar")
+                    .text('100%')
+                    .css({
+                        width: '100%'
+                    });
+
+            }
+
+            sleep(1000 * 15, function () {
+
+
+                console.log('aguardando...', contact)
+ 
+ 
+                let url_api = "http://170.187.194.116:3401/sendText"; 
+
+                if(linkSend && linkSend != "") url_api = "http://170.187.194.116:3401/sendLink";
+
+                let dataToSend = {
+                        "session": sessionName,
+                        "number": "55" + contact?.telefone,
+                        "text": textSend,
+                        // "text": "Olá " + contact?.nome + "\n\n" + textSend, //com nome
+                        "url": linkSend
+                    };
+
+                var settings = {
+                    "url": url_api,
+                    "method": "POST",
+                    "timeout": 0,
+                    "headers": {
+                        "Content-Type": "application/json",
+                        "apitoken": "12345",
+                        "sessionkey": sessionKey
+                    },
+                    "data": JSON.stringify(dataToSend),
+                };
+
+                $.ajax(settings).done(function (response) {
+                    console.log(response);
+
+
+
+                }).fail(function (error) {
+
+                    console.log('Houve um erro')
+                    console.log(error)
+                });
+
+
+
+
+
+
+
+
+
+            });
+
+
+
+        });
+
+
+
+
+
+
+        // $.each(listToSend, function (indexInArray, valueOfElement) {
+
+
+
+        //     var settings = {
+        //         "url": "example.com",
+        //         "method": "GET",
+        //         "timeout": 0,
+        //         "headers": {
+        //             "Content-Type": "application/json",
+        //             "apitoken": "Free-LIzXXzCmNVzwt3ErKgGnZGLZ",
+        //             "Authorization": "Bearer $2b$10$.WYmfnPYhQihkVmdOg6ygendEh5ONuWPQT1FBVG593QFjD6Sbnmry"
+        //         },
+        //         "data": JSON.stringify({
+        //             "phone": "55" + valueOfElement?.telefone,
+        //             "path": "https://francy.yesis.app.br/imagens/e-hoje-convencao.jpg",
+        //             "fileName": "É hoje!!",
+        //             "caption": ""
+        //         }),
+        //     };
+
+
+
+        //     $.ajax(settings).done(function (response) {
+        //         setTimeout(function () {
+
+
+
+
+
+        //             console.log(response);
+
+        //             progressVal = EvoluteValue + progressVal;
+
+        //             console.log(`Elemento ${indexInArray}`);
+        //             console.log(progressVal);
+
+        //             console.log(`OK: ${valueOfElement?.telefone}`)
+
+        //             $("#send-progress-bar")
+        //                 .text(`${progressVal}%`)
+        //                 .css({
+        //                     width: `${progressVal}%`
+        //                 });
+
+        //             if (progressVal > 94) {
+
+
+        //                 console.log('finalizou')
+
+        //                 $("#send-progress-bar")
+        //                     .text('100%')
+        //                     .css({
+        //                         width: '100%'
+        //                     });
+
+        //             }
+
+
+        //         }, 3000);
+
+
+        //     }).fail(function (error) {
+        //         console.log('houve erro...')
+        //         console.log(error);
+        //     });
+
+
+
+
+
+        //     return;
+        //     // envio de imagens 
+        //     var settings = {
+        //         "url": "https://whatsapp-free01.wppserver.com/api/yesistec1289/send-image",
+        //         "method": "POST",
+        //         "timeout": 0,
+        //         "headers": {
+        //             "Content-Type": "application/json",
+        //             "apitoken": "Free-LIzXXzCmNVzwt3ErKgGnZGLZ",
+        //             "Authorization": "Bearer $2b$10$.WYmfnPYhQihkVmdOg6ygendEh5ONuWPQT1FBVG593QFjD6Sbnmry"
+        //         },
+        //         "data": JSON.stringify({
+        //             "phone": "55" + valueOfElement?.telefone,
+        //             "path": "https://francy.yesis.app.br/imagens/e-hoje-convencao.jpg",
+        //             "fileName": "É hoje!!",
+        //             "caption": ""
+        //         }),
+        //     };
+
+        //     $.ajax(settings).done(function (response) {
+        //         console.log(response);
+
+        //         progressVal = EvoluteValue + progressVal;
+
+        //         console.log(`Elemento ${indexInArray}`);
+        //         console.log(progressVal);
+
+        //         console.log(`OK: ${valueOfElement?.telefone}`)
+
+        //         $("#send-progress-bar")
+        //             .text(`${progressVal}%`)
+        //             .css({
+        //                 width: `${progressVal}%`
+        //             });
+
+        //         if (progressVal > 94) {
+
+
+        //             console.log('finalizou')
+
+        //             $("#send-progress-bar")
+        //                 .text('100%')
+        //                 .css({
+        //                     width: '100%'
+        //                 });
+
+        //         }
+
+        //     }).fail(function (error) {
+        //         console.log('houve erro...')
+        //         console.log(error);
+        //     });
+
+        //     // var settings = {
+        //     //     "url": "https://whatsapp-free01.wppserver.com/api/yesistec1289/send-message",
+        //     //     "method": "POST",
+        //     //     "timeout": 0,
+        //     //     "headers": {
+        //     //         "Content-Type": "application/json",
+        //     //         "apitoken": "Free-LIzXXzCmNVzwt3ErKgGnZGLZ",
+        //     //         "Authorization": "Bearer $2b$10$j4f8Y39uZ58Rhz8Ls0oCv..IGzhwosSYcT_dUqqe_63ELzrIuMoou"
+        //     //     },
+        //     //     "data": JSON.stringify({
+        //     //         "phone": "559183763092",
+        //     //         "message": "https://connect.yesis.app.br/?cliente=giz",
+        //     //         "isGroup": false
+        //     //     }),
+        //     // };
+
+        //     // $.ajax(settings).done(function (response) {
+        //     //     console.log(response);
+        //     // }).fail(function (error) {
+        //     //     console.log(error);
+        //     // });
+
+
+        //     // $.ajax({
+        //     //     url: 'https://whatsapp-free01.wppserver.com/api/yesistec1289/send-message',
+        //     //     method: 'POST',
+        //     //     "timeout": 2000,
+        //     //     headers: {
+        //     //         "Content-Type": "application/json",
+        //     //         "Accept": "*/*",
+        //     //         "apitoken": "Free-LIzXXzCmNVzwt3ErKgGnZGLZ",
+        //     //         "Authorization": "Bearer $2b$10$j4f8Y39uZ58Rhz8Ls0oCv..IGzhwosSYcT_dUqqe_63ELzrIuMoou"
+        //     //     },
+        //     //     "data": JSON.stringify({
+        //     //         "phone": "55" + valueOfElement?.telefone,
+        //     //         "message": textSend,
+        //     //         "isGroup": false
+        //     //     }),
+        //     //     success: async function (response) {
+
+        //     //         progressVal = EvoluteValue + progressVal;
+
+        //     //         console.log(`Elemento ${indexInArray}`);
+        //     //         console.log(progressVal);
+
+        //     //         console.log(`OK: ${valueOfElement?.telefone}`)
+
+        //     //         $("#send-progress-bar")
+        //     //             .text(`${progressVal}%`)
+        //     //             .css({
+        //     //                 width: `${progressVal}%`
+        //     //             });
+
+        //     //         if (progressVal > 94) {
+
+
+        //     //             console.log('finalizou')
+
+        //     //             $("#send-progress-bar")
+        //     //                 .text('100%')
+        //     //                 .css({
+        //     //                     width: '100%'
+        //     //                 });
+
+        //     //         }
+
+        //     //     },
+        //     //     error: function (jqXHR, exception) {
+        //     //         console.log(`Erro: ${valueOfElement?.telefone}`)
+        //     //         var msg = '';
+        //     //         if (jqXHR.status === 0) {
+        //     //             msg = 'Not connect.\n Verify Network.';
+        //     //         } else if (jqXHR.status == 404) {
+        //     //             msg = 'Requested page not found. [404]';
+        //     //         } else if (jqXHR.status == 500) {
+        //     //             msg = 'Internal Server Error [500].';
+        //     //         } else if (exception === 'parsererror') {
+        //     //             msg = 'Requested JSON parse failed.';
+        //     //         } else if (exception === 'timeout') {
+        //     //             msg = 'Time out error.';
+        //     //         } else if (exception === 'abort') {
+        //     //             msg = 'Ajax request aborted.';
+        //     //         } else {
+        //     //             msg = 'Uncaught Error.\n' + jqXHR.responseText;
+        //     //         }
+        //     //         console.log(msg);
+        //     //     },
+        //     // });
+
+
+        // });
+
+
+    }
+
+
+</script>
+<!--[/main]-->
